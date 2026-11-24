@@ -7,16 +7,16 @@
 #include <string.h>
 
 @interface Recorder : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate>
-@property AVCaptureSession *capture;
-@property AVCaptureVideoDataOutput *output;
-@property AVAssetWriter *writer;
-@property AVAssetWriterInput *input;
-@property NSURL *url;
-@property dispatch_queue_t queue;
-@property NSString *failure;
+@property (strong) AVCaptureSession *capture;
+@property (strong) AVCaptureVideoDataOutput *output;
+@property (strong) AVAssetWriter *writer;
+@property (strong) AVAssetWriterInput *input;
+@property (strong) NSURL *url;
+@property (strong) dispatch_queue_t queue;
+@property (copy) NSString *failure;
 @property BOOL firstFrame;
 @property BOOL stopping;
-@property id runtimeObserver;
+@property (strong) id runtimeObserver;
 @end
 
 @implementation Recorder
@@ -114,4 +114,5 @@ int rec_stop(void) {
   recorder = nil; return failure ? 0 : 1;
  }
 }
+
 

@@ -24,8 +24,8 @@ func main() {
  if err := run(); err != nil { fmt.Fprintln(os.Stderr, "screenrec:", err); os.Exit(1) }
 }
 func run() error {
- dir, err := filepath.Abs("recordings"); if err != nil { return err }
- if err = os.MkdirAll(dir, 0755); err != nil { return fmt.Errorf("create recordings directory: %w", err) }
+ dir, err := filepath.Abs(".MP4"); if err != nil { return err }
+ if err = os.MkdirAll(dir, 0755); err != nil { return fmt.Errorf("create .MP4 directory: %w", err) }
  // Reserve a unique name, avoiding overwrite even when recordings start in the same second.
  var f *os.File
  for i := 0; i < 1000; i++ {

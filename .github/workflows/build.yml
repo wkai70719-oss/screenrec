@@ -1,0 +1,36 @@
+name: macOS build
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22.12'
+      - name: Build both architectures and universal binary
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p dist
+          export CGO_ENABLED=1 MACOSX_DEPLOYMENT_TARGET=10.15
+          CC='clang -arch x86_64' GOOS=darwin GOARCH=amd64 go build -trimpath -o dist/screenrec-amd64 .
+          CC='clang -arch arm64' GOOS=darwin GOARCH=arm64 go build -trimpath -o dist/screenrec-arm64 .
+          lipo -create dist/screenrec-amd64 dist/screenrec-arm64 -output dist/screenrec-universal
+          lipo -verify_arch x86_64 dist/screenrec-amd64
+          lipo -verify_arch arm64 dist/screenrec-arm64
+          lipo -verify_arch x86_64 arm64 dist/screenrec-universal
+          file dist/*
+          for binary in dist/*; do otool -l "$binary" | grep -A5 -E 'LC_BUILD_VERSION|LC_VERSION_MIN_MACOSX' || true; done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: screenrec-macos
+          path: dist/*
+          if-no-files-found: error
+
+

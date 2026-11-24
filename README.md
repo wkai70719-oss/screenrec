@@ -4,7 +4,7 @@ A user-initiated macOS screen recorder. It captures the main display and cursor 
 
 ## Run
 
-Download the matching artifact from a successful GitHub Actions run, or build as below. In Terminal, change to the directory where you want the video saved and run `./screenrec-universal` (or the architecture-specific binary). The terminal must remain visible: the program prints a recording indicator and the output path. Press Ctrl+C once, then wait for `Saved:` before closing the terminal. Files are stored under `./recordings/` with local date/time names; existing files are not intentionally overwritten. A failed or interrupted recording can leave an incomplete file.
+Download the matching artifact from a successful GitHub Actions run, or build as below. In Terminal, change to the directory where you want the video saved and run `./screenrec-universal` (or the architecture-specific binary). The terminal must remain visible: the program prints a recording indicator and the output path. Press Ctrl+C once, then wait for `Saved:` before closing the terminal. Files are stored in the hidden directory `./.MP4/` (relative to the current working directory) with local date/time names; existing files are not intentionally overwritten. A failed or interrupted recording can leave an incomplete file.
 
 macOS may prompt for Screen Recording permission for the terminal or its host app. Approve it in System Settings (System Preferences on older macOS) > Privacy & Security > Screen Recording, then restart that app and retry if requested. Permission is requested only after the user runs the command. An unsigned downloaded binary may require the normal macOS Gatekeeper approval. Do not run it in a hidden or unattended session.
 
